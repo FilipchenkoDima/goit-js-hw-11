@@ -33,17 +33,21 @@ export default class imgApiService {
                 Notify.failure("Sorry, there are no images matching your search query. Please try again.");
                 return;
             };
-            loadMoreBtn.style.display = 'block';
+            showLoadMoreBtn();
             if (totalHits <= 40) {
-                loadMoreBtn.style.display = 'none';
+                hiddenLoadMoreBtn();
             };
             cardMarkup(response.data);
+            if (response.data.hits < 40) {
+                hiddenLoadMoreBtn();
+                endSearchResults();
+            }
             
             if (this.page <= 2) {
                 Notify.success(`Hooray! We found ${totalHits} images.`);
             };
         }).catch(error => {
-            Notify.failure("We're sorry, but you've reached the end of search results.");
+            endSearchResults();
         });
         this.incrementPage();
         return response;
@@ -62,6 +66,14 @@ export default class imgApiService {
     }
 };
 
+function hiddenLoadMoreBtn() {
+    loadMoreBtn.style.display = 'none';
+};
 
+function showLoadMoreBtn() {
+    loadMoreBtn.style.display = 'block';
+};
 
-
+function endSearchResults() {
+    Notify.failure("We're sorry, but you've reached the end of search results.");
+};

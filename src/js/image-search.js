@@ -1,6 +1,4 @@
 import ImgApiService from './fetch-image'
-import cardMarkup from './photo-card-markup';
-import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
 
@@ -18,20 +16,26 @@ function onSubmitForm(evt) {
 
     imgApiService.resetPage();
     galleryEl.innerHTML = '';
-    loadMoreBtn.style.display = 'none';
+    hiddenLoadMoreBtn();
     evt.target.searchQuery.value = '';
     imgApiService.query = inputQuery;
     imgApiService.fetchSearchImg();
 };
 
 function onLoadMore() {
-    loadMoreBtn.style.display = 'none';
+    hiddenLoadMoreBtn();
     imgApiService.fetchSearchImg();
 };
 
+function hiddenLoadMoreBtn() {
+    loadMoreBtn.style.display = 'none';
+};
 
-// console.log(imgApiService);
-new SimpleLightbox('.gallery a', {
-    captionsData: 'alt',
-    captionsDelay: 250,
-});
+
+// window.addEventListener('scroll', () => {
+//     const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
+//     if (scrollHeight - clientHeight === scrollTop) {
+//         onLoadMore();
+//     };
+//     // Для активації потрібно закоментувати все,що пов'язане з кнопкою 'Load More'
+// });

@@ -1,10 +1,14 @@
+import SimpleLightbox from "simplelightbox";
+
 const galleryEl = document.querySelector('.gallery');
 
 export default function cardMarkup(information) {
     // const { webformatURL, largeImageURL, tags, likes, views, comments, downloads } = information.hits;
    const markup = information.hits.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
         return `<div class="photo-card">
-  <img src="${largeImageURL}" alt="${tags}" loading="lazy" />
+  <a href="${webformatURL}">
+    <img src="${largeImageURL}" alt="${tags}" loading="lazy" />
+    </a>
   <div class="info">
     <p class="info-item">
       <b>Likes<br> ${likes}</b>
@@ -21,7 +25,11 @@ export default function cardMarkup(information) {
   </div>
 </div>`
    }).join('');
-    galleryEl.insertAdjacentHTML('beforeend', markup);
-
     
+    galleryEl.insertAdjacentHTML('beforeend', markup);
+    
+    var gallery = new SimpleLightbox('.gallery a', {
+    captionsData: 'alt',
+    captionsDelay: 250,
+});
 };
