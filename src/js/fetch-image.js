@@ -2,6 +2,7 @@ const axios = require('axios').default;
 import cardMarkup from './photo-card-markup';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
+
 const loadMoreBtn = document.querySelector('.load-more');
 
 
@@ -10,12 +11,13 @@ const BASE_KEY = '31282131-4e4d9489159d462cf4c23243b';
 
 export default class imgApiService {
     constructor() {
-        this.searchQuery = '';  
+        this.searchQuery = '';
         this.page = 1;
     };
     
-    fetchSearchImg() {
-        const options = {
+    async fetchSearchImg() {
+        try {
+             const options = {
             key: BASE_KEY,
             q: this.searchQuery,
             image_type: 'photo',
@@ -25,9 +27,9 @@ export default class imgApiService {
             per_page: 40,
         };
 
-        const response = axios.get(BASE_URL, {
+        const response = await axios.get(BASE_URL, {
             params: options,
-        }).then(response => {
+        });
             const totalHits = response.data.totalHits;
             if (totalHits === 0) {
                 Notify.failure("Sorry, there are no images matching your search query. Please try again.");
@@ -43,15 +45,17 @@ export default class imgApiService {
                 endSearchResults();
             }
             
-            if (this.page <= 2) {
+            if (this.page <= 1) {
                 Notify.success(`Hooray! We found ${totalHits} images.`);
             };
-        }).catch(error => {
-            endSearchResults();
-        });
+        
         this.incrementPage();
         return response;
+        } catch (error) {
+            console.error(error);
+        };
     };
+
 
     set query(newQuery) {
         this.searchQuery = newQuery;
@@ -63,7 +67,7 @@ export default class imgApiService {
 
     resetPage() {
         this.page = 1;
-    }
+    };
 };
 
 function hiddenLoadMoreBtn() {

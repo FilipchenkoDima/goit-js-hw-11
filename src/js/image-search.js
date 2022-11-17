@@ -25,6 +25,7 @@ function onSubmitForm(evt) {
 function onLoadMore() {
     hiddenLoadMoreBtn();
     imgApiService.fetchSearchImg();
+    console.log(imgApiService)
 };
 
 function hiddenLoadMoreBtn() {

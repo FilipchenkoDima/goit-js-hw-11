@@ -28,8 +28,6 @@ export default function cardMarkup(information) {
     
     galleryEl.insertAdjacentHTML('beforeend', markup);
     
-    var gallery = new SimpleLightbox('.gallery a', {
-    captionsData: 'alt',
-    captionsDelay: 250,
-});
+    var gallery = new SimpleLightbox('.gallery a', {});
+    gallery.refresh();
 };
