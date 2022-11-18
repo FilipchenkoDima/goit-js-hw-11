@@ -1,9 +1,6 @@
-import SimpleLightbox from "simplelightbox";
-
 const galleryEl = document.querySelector('.gallery');
 
 export default function cardMarkup(information) {
-    // const { webformatURL, largeImageURL, tags, likes, views, comments, downloads } = information.hits;
    const markup = information.hits.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
         return `<div class="photo-card">
   <a href="${webformatURL}">
@@ -27,7 +24,4 @@ export default function cardMarkup(information) {
    }).join('');
     
     galleryEl.insertAdjacentHTML('beforeend', markup);
-    
-    var gallery = new SimpleLightbox('.gallery a', {});
-    gallery.refresh();
 };

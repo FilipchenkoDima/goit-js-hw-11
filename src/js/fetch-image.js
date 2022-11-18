@@ -1,10 +1,11 @@
-const axios = require('axios').default;
+import axios from "axios";
 import cardMarkup from './photo-card-markup';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
 
 const loadMoreBtn = document.querySelector('.load-more');
-
 
 const BASE_URL = 'https://pixabay.com/api/';
 const BASE_KEY = '31282131-4e4d9489159d462cf4c23243b';
@@ -13,6 +14,7 @@ export default class imgApiService {
     constructor() {
         this.searchQuery = '';
         this.page = 1;
+        this.gallery = new SimpleLightbox('.gallery a', {});
     };
     
     async fetchSearchImg() {
@@ -39,11 +41,14 @@ export default class imgApiService {
             if (totalHits <= 40) {
                 hiddenLoadMoreBtn();
             };
-            cardMarkup(response.data);
+
+            cardMarkup(response.data);            
+            this.gallery.refresh();
+
             if (response.data.hits < 40) {
                 hiddenLoadMoreBtn();
                 endSearchResults();
-            }
+            };
             
             if (this.page <= 1) {
                 Notify.success(`Hooray! We found ${totalHits} images.`);

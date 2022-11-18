@@ -1,6 +1,4 @@
 import ImgApiService from './fetch-image'
-import "simplelightbox/dist/simple-lightbox.min.css";
-
 
 const imgApiService = new ImgApiService();
 const searchFormBtn = document.querySelector('#search-form');
@@ -25,18 +23,8 @@ function onSubmitForm(evt) {
 function onLoadMore() {
     hiddenLoadMoreBtn();
     imgApiService.fetchSearchImg();
-    console.log(imgApiService)
 };
 
 function hiddenLoadMoreBtn() {
     loadMoreBtn.style.display = 'none';
 };
-
-
-// window.addEventListener('scroll', () => {
-//     const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
-//     if (scrollHeight - clientHeight === scrollTop) {
-//         onLoadMore();
-//     };
-//     // Для активації потрібно закоментувати все,що пов'язане з кнопкою 'Load More'
-// });
